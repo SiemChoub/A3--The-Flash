@@ -29,6 +29,7 @@ progressbar.start()
 time = 60
 heart=3
 prev_score = 0 
+#sound
 
 def sound_win():
     winsound.PlaySound('./sound/TB7L64W-winning.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
@@ -64,6 +65,8 @@ def play_video(video_path, window_width, window_height, playback_fps):
     cv2.destroyAllWindows()
     # menu()
 
+
+#main
 def main():
     splash_window.destroy()
     global window, canvas, wall_1, wall_2, wall_3
@@ -88,7 +91,7 @@ def main():
     window.mainloop()
  
 
-
+#times
 
 def settime():
     global time, canvas, lose_heart, heart, score, prev_score,score_game
@@ -106,12 +109,13 @@ def settime():
     canvas.after(1000, settime)
 
 
-
+#change bg
 def chage_bg():
     canvas.itemconfig(background_image_label_1,image=background_image1)
     canvas.itemconfig(background_image_label_2,image=background_image1)
     canvas.itemconfig('wall',fill='red')
 
+#auto sound
 def sound_menu_auto():
     try:
         while True:
@@ -125,6 +129,8 @@ def lost():
     lost_side()
 def win():
     win_side()
+
+#keypress for player work
 a=1
 arr = []
 def key_press(event):
@@ -169,7 +175,6 @@ def key_press(event):
         if (player_x - enemy5_x)**2 + (player_y - enemy5_y)**2 <= 70**2:
             print("Player collided with enemy 2")
             game_over()
-
     def game_over():
         print("Game Over")
         lost_side()
@@ -196,21 +201,22 @@ def key_press(event):
             canvas.move(player, 0, 15)
             if arr == ["Right"]:
                 canvas.itemconfig(player, image=ply_lefts)
-                canvas.after(20, change_original)
+                canvas.after(5, change_original)
             else:
                 canvas.itemconfig(player,image=ply_fight_ri)
-                canvas.after(20, change_original2)   
+                canvas.after(5, change_original2)   
     elif event.keysym == "Up":
         if oval_coords[0] >= wall_coords2[2] :
             canvas.move(player, 0, -15)
             if arr == ["Right"]:
                 canvas.itemconfig(player, image=ply_lefts)
-                canvas.after(20, change_original)
+                canvas.after(5, change_original)
             else:
                 canvas.itemconfig(player,image=ply_fight_ri)
-                canvas.after(20, change_original2)
+                canvas.after(5, change_original2)
     window.bind("<Key>",key_press)
     check_collision()
+#start gameplay
 def startGame():
     global window, canvas,c, wall_2, wall_3,timer_text,lost_side,time,win_side,lose_heart,score_text,score,player,ply_lefts,sword_wall2_id,players_img,SCROLLING_SPEED,background_image1,background_image_label_1,background_image_label_2,ply_fight_lt,ply_fight_ri,time2_id,insect1s1i_ds,lion1s,score_game,sward_wall3_id
     window.destroy()
@@ -235,7 +241,7 @@ def startGame():
     background_image_label_1= canvas.create_image(0, 0,anchor=tk.NW, image=background_image)
     background_image_label_2= canvas.create_image(app_width, 0,anchor=tk.NW, image=background_image)
 
-    
+    #auto bg
     def scroll_bg_image():
         
         canvas.move(background_image_label_1, -0.2, 0)
@@ -256,7 +262,7 @@ def startGame():
             window.after(1000, win)
         if score>=50:
             chage_bg()
-
+#move enemy
     def move_insects():
         canvas.move(lion1s, 0, 2)
         canvas.move(insect1s1i_ds, 0, -2)
@@ -294,6 +300,8 @@ def startGame():
     def change_bg():
         if score>=10:
             canvas.itemconfig(background_image,image=background_image1)
+    
+    #lose window
     def lost_side():
         nonlocal game_over_shown
 
@@ -347,6 +355,7 @@ def startGame():
         sound_lost()
 
     game_over_shown = False
+    #win window
     def win_side():
         nonlocal game_win_shown
 
@@ -538,6 +547,8 @@ def startGame():
     move_insects1()
     window.bind("<Key>",key_press)
     window.mainloop()
+
+#menu
 def menu():
     global window
     window.destroy()
